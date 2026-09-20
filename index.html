@@ -1,1 +1,1054 @@
-testing
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stratum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #080808;
+  --gold: #BFA96A;
+  --gold45: rgba(191,169,106,0.45);
+  --gold22: rgba(191,169,106,0.22);
+  --gold14: rgba(191,169,106,0.14);
+  --gold07: rgba(191,169,106,0.07);
+  --cream: #EBE6DC;
+  --muted: #79715F;
+  --border: rgba(191,169,106,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  inset-block-start: 0; inset-inline: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 64px;
+  border-bottom: 1px solid transparent;
+  transition: background 0.45s, border-color 0.45s;
+}
+.nav.scrolled {
+  background: rgba(8,8,8,0.94);
+  border-color: var(--border);
+  backdrop-filter: blur(14px);
+}
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.38em;
+  color: var(--gold);
+  text-decoration: none;
+}
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.22s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 11px 28px;
+  text-decoration: none;
+  transition: all 0.22s;
+}
+.nav-btn:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 680px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-inline: 64px;
+  padding-block-end: 88px;
+}
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 540px;
+}
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.42em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-block-end: 26px;
+  opacity: 0;
+  animation: riseIn 0.9s ease 0.35s forwards;
+}
+.hero-title {
+  font-size: clamp(60px, 8vw, 116px);
+  font-weight: 300;
+  letter-spacing: 0.07em;
+  line-height: 0.92;
+  color: var(--cream);
+  opacity: 0;
+  animation: riseIn 0.9s ease 0.5s forwards;
+}
+.hero-title-em {
+  display: block;
+  font-style: italic;
+  color: var(--gold);
+  font-size: 0.84em;
+}
+.hero-sub {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-block-start: 28px;
+  max-width: 400px;
+  opacity: 0;
+  animation: riseIn 0.9s ease 0.65s forwards;
+}
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  margin-block-start: 44px;
+  opacity: 0;
+  animation: riseIn 0.9s ease 0.8s forwards;
+}
+.btn-fill {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--bg);
+  padding: 15px 38px;
+  text-decoration: none;
+  transition: opacity 0.22s;
+  display: inline-block;
+}
+.btn-fill:hover { opacity: 0.82; }
+.btn-outline {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cream);
+  border: 1px solid var(--border);
+  padding: 15px 38px;
+  text-decoration: none;
+  transition: all 0.22s;
+  display: inline-block;
+}
+.btn-outline:hover { border-color: var(--gold45); color: var(--gold); }
+.hero-meta {
+  position: absolute;
+  inset-block-end: 88px;
+  inset-inline-end: 64px;
+  z-index: 2;
+  text-align: right;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.3s forwards;
+}
+.hero-meta-line {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  color: var(--gold22);
+  text-transform: uppercase;
+  line-height: 2.2;
+}
+.scroll-hint {
+  position: absolute;
+  inset-block-end: 40px;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.6s forwards;
+}
+.scroll-line {
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(to bottom, var(--gold45), transparent);
+  animation: breathe 2.8s ease infinite;
+}
+.scroll-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.38em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.2; }
+  50%       { opacity: 0.85; }
+}
+
+/* ── LAYOUT UTILS ── */
+.wrap {
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: 64px;
+}
+.rule { width: 100%; height: 1px; background: var(--border); }
+
+/* ── SECTION TYPOGRAPHY ── */
+.eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: block;
+  margin-block-end: 30px;
+}
+.headline {
+  font-size: clamp(38px, 4.8vw, 64px);
+  font-weight: 300;
+  line-height: 1.08;
+  margin-block-end: 24px;
+}
+.headline em { font-style: italic; color: var(--gold); }
+.body-text {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.78;
+  max-width: 520px;
+}
+
+/* ── EXCHANGE ── */
+.exchange-section { padding-block: 120px; }
+.exchange-intro { margin-block-end: 80px; }
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+}
+.step {
+  padding: 54px 46px;
+  border-right: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.step:last-child { border-right: none; }
+.step.visible { opacity: 1; transform: translateY(0); }
+.step-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  color: var(--gold22);
+  margin-block-end: 38px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.step-num::after {
+  content: '';
+  height: 1px;
+  width: 32px;
+  background: var(--border);
+}
+.step-icon { width: 42px; height: 42px; margin-block-end: 28px; }
+.step-name {
+  font-size: 30px;
+  font-weight: 300;
+  margin-block-end: 14px;
+}
+.step-desc {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.78;
+  font-weight: 300;
+}
+
+/* ── SOURCES ── */
+.sources-section { padding-block: 120px; }
+.sources-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+.source-intro { margin-block-end: 60px; }
+.source-list { display: flex; flex-direction: column; }
+.source-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding-block: 24px;
+  border-top: 1px solid var(--border);
+  cursor: default;
+  transition: padding-left 0.28s ease;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.55s ease, transform 0.55s ease, padding-left 0.28s ease;
+}
+.source-row:last-child { border-bottom: 1px solid var(--border); }
+.source-row.visible { opacity: 1; transform: translateY(0); }
+.source-row:hover { padding-inline-start: 14px; }
+.source-row:hover .source-name { color: var(--gold); }
+.source-code {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--gold22);
+  min-width: 42px;
+}
+.source-name {
+  font-size: 23px;
+  font-weight: 300;
+  flex: 1;
+  transition: color 0.22s;
+}
+.source-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 5px 13px;
+  text-transform: uppercase;
+}
+.sources-vis {
+  position: relative;
+  height: 460px;
+}
+#sourcesCanvas { width: 100%; height: 100%; }
+
+/* ── INTELLIGENCE ── */
+.intel-section { padding-block: 120px; }
+.intel-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-block-end: 70px;
+}
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+}
+.intel-card {
+  background: var(--bg);
+  padding: 50px 46px;
+  transition: background 0.32s;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease, background 0.32s;
+}
+.intel-card.visible { opacity: 1; transform: translateY(0); }
+.intel-card:hover { background: var(--gold07); }
+.card-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  color: var(--gold22);
+  text-transform: uppercase;
+  margin-block-end: 18px;
+}
+.card-title {
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-block-end: 18px;
+}
+.card-body {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.82;
+  font-weight: 300;
+}
+
+/* ── STATS ── */
+.stats-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-block: 1px solid var(--border);
+}
+.stat-cell {
+  padding-block: 72px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-cell.visible { opacity: 1; transform: translateY(0); }
+.stat-val {
+  font-size: clamp(48px, 5.5vw, 72px);
+  font-weight: 300;
+  line-height: 1;
+  margin-block-end: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.stat-val sup {
+  font-size: 0.42em;
+  font-style: italic;
+  color: var(--gold);
+  vertical-align: super;
+  letter-spacing: 0;
+}
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding-block: 160px;
+  text-align: center;
+}
+.cta-inner { max-width: 680px; margin-inline: auto; }
+.cta-section .headline { margin-inline: auto; max-width: 600px; }
+.cta-section .body-text { margin-inline: auto; text-align: center; margin-block-end: 50px; }
+.cta-actions { display: flex; gap: 14px; justify-content: center; }
+
+/* ── FOOTER ── */
+.footer-inner {
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: 64px;
+  padding-block: 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.36em;
+  color: var(--gold);
+}
+.footer-links {
+  display: flex;
+  gap: 38px;
+  list-style: none;
+}
+.footer-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.22s;
+}
+.footer-links a:hover { color: var(--cream); }
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .nav { padding-inline: 32px; }
+  .nav-links { display: none; }
+  .hero { padding-inline: 32px; padding-block-end: 72px; }
+  .wrap { padding-inline: 32px; }
+  .hero-meta { display: none; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .step { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 32px; }
+  .step:last-child { border-bottom: none; }
+  .sources-layout { grid-template-columns: 1fr; gap: 48px; }
+  .sources-vis { height: 320px; }
+  .intel-intro { grid-template-columns: 1fr; gap: 28px; }
+  .intel-grid { grid-template-columns: 1fr; }
+  .stats-band { grid-template-columns: 1fr 1fr; }
+  .footer-inner { flex-direction: column; gap: 28px; text-align: center; padding-inline: 32px; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+@media (max-width: 480px) {
+  .hero-actions { flex-direction: column; }
+  .stats-band { grid-template-columns: 1fr; }
+  .stat-cell { border-right: none; border-bottom: 1px solid var(--border); }
+  .cta-actions { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="#" class="nav-logo">STRATUM</a>
+  <ul class="nav-links">
+    <li><a href="#sources">Sources</a></li>
+    <li><a href="#exchange">Exchange</a></li>
+    <li><a href="#intelligence">Intelligence</a></li>
+  </ul>
+  <a href="#cta" class="nav-btn">Request Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Data infrastructure for AI</p>
+    <h1 class="hero-title">
+      STRATUM
+      <span class="hero-title-em">refined.</span>
+    </h1>
+    <p class="hero-sub">The layer between the world's data and the models that learn from it. We source, structure, and deliver intelligence at scale.</p>
+    <div class="hero-actions">
+      <a href="#exchange" class="btn-fill">Explore the Exchange</a>
+      <a href="#sources" class="btn-outline">Our Sources</a>
+    </div>
+  </div>
+
+  <div class="hero-meta">
+    <div class="hero-meta-line">APPLIED RESEARCH</div>
+    <div class="hero-meta-line">Evaluation pass 04/04</div>
+    <div class="hero-meta-line" style="margin-top:6px;">SHIPS ONLY AFTER PROVEN UPLIFT</div>
+    <div class="hero-meta-line" style="margin-top:6px; color: rgba(191,169,106,0.12);">DEPLOYED MODELS SURFACE NEW FAILURES</div>
+    <div class="hero-meta-line" style="color: rgba(191,169,106,0.12);">NEW TASKS / NEW DATA</div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- EXCHANGE -->
+<div class="rule"></div>
+<section id="exchange">
+  <div class="wrap exchange-section">
+    <div class="exchange-intro">
+      <span class="eyebrow">01 / The Exchange</span>
+      <h2 class="headline">Data flows<br><em>through us.</em></h2>
+      <p class="body-text">From origin to inference, Stratum manages every step of the data supply chain. We connect the world's most valuable behavioral, transactional, and domain signals to the AI systems that need them most.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <svg class="step-icon" viewBox="0 0 42 42" fill="none">
+          <circle cx="21" cy="21" r="17" stroke="rgba(191,169,106,0.48)" stroke-width="0.6"/>
+          <circle cx="21" cy="21" r="9"  stroke="rgba(191,169,106,0.28)" stroke-width="0.6" stroke-dasharray="2 3"/>
+          <circle cx="21" cy="21" r="2.5" fill="rgba(191,169,106,0.55)"/>
+          <line x1="4"  y1="21" x2="19" y2="21" stroke="rgba(191,169,106,0.38)" stroke-width="0.6"/>
+          <line x1="23" y1="21" x2="38" y2="21" stroke="rgba(191,169,106,0.38)" stroke-width="0.6"/>
+          <line x1="21" y1="4"  x2="21" y2="19" stroke="rgba(191,169,106,0.38)" stroke-width="0.6"/>
+          <line x1="21" y1="23" x2="21" y2="38" stroke="rgba(191,169,106,0.38)" stroke-width="0.6"/>
+        </svg>
+        <h3 class="step-name">Source</h3>
+        <p class="step-desc">We partner with enterprises, consumer platforms, and specialized networks to collect richly structured, consent-verified data across dozens of verticals.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <svg class="step-icon" viewBox="0 0 42 42" fill="none">
+          <rect x="4"  y="4"  width="34" height="34" stroke="rgba(191,169,106,0.48)" stroke-width="0.6"/>
+          <rect x="12" y="12" width="18" height="18" stroke="rgba(191,169,106,0.28)" stroke-width="0.6" stroke-dasharray="2 3"/>
+          <rect x="18" y="18" width="6"  height="6"  fill="rgba(191,169,106,0.38)"/>
+          <line x1="4"  y1="21" x2="38" y2="21" stroke="rgba(191,169,106,0.16)" stroke-width="0.6" stroke-dasharray="1 3"/>
+          <line x1="21" y1="4"  x2="21" y2="38" stroke="rgba(191,169,106,0.16)" stroke-width="0.6" stroke-dasharray="1 3"/>
+        </svg>
+        <h3 class="step-name">Refine</h3>
+        <p class="step-desc">Our processing layer normalizes, deduplicates, and structures data into formats optimized for model training, fine-tuning, and evaluation pipelines.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <svg class="step-icon" viewBox="0 0 42 42" fill="none">
+          <line x1="4"  y1="13" x2="27" y2="13" stroke="rgba(191,169,106,0.32)" stroke-width="0.6"/>
+          <line x1="4"  y1="21" x2="38" y2="21" stroke="rgba(191,169,106,0.56)" stroke-width="0.6"/>
+          <line x1="4"  y1="29" x2="30" y2="29" stroke="rgba(191,169,106,0.32)" stroke-width="0.6"/>
+          <polygon points="32,17 40,21 32,25" fill="rgba(191,169,106,0.48)"/>
+          <circle cx="4" cy="13" r="2" fill="rgba(191,169,106,0.28)"/>
+          <circle cx="4" cy="21" r="2" fill="rgba(191,169,106,0.65)"/>
+          <circle cx="4" cy="29" r="2" fill="rgba(191,169,106,0.28)"/>
+        </svg>
+        <h3 class="step-name">Deliver</h3>
+        <p class="step-desc">Through secure, versioned pipelines, AI companies receive continuous, audit-ready data streams with full provenance and compliance documentation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<div class="rule"></div>
+<section id="sources">
+  <div class="wrap sources-section">
+    <div class="sources-layout">
+      <div>
+        <div class="source-intro">
+          <span class="eyebrow">02 / Data Origins</span>
+          <h2 class="headline">Every layer<br>of the <em>real world.</em></h2>
+          <p class="body-text">We maintain active partnerships across five primary data categories, each with dedicated sourcing, compliance, and quality teams.</p>
+        </div>
+        <div class="source-list">
+          <div class="source-row">
+            <span class="source-code">00-1</span>
+            <span class="source-name">Enterprise Data</span>
+            <span class="source-badge">Transactional</span>
+          </div>
+          <div class="source-row">
+            <span class="source-code">00-2</span>
+            <span class="source-name">Consumer Behavior</span>
+            <span class="source-badge">Behavioral</span>
+          </div>
+          <div class="source-row">
+            <span class="source-code">00-3</span>
+            <span class="source-name">Fashion and Retail</span>
+            <span class="source-badge">Vertical</span>
+          </div>
+          <div class="source-row">
+            <span class="source-code">00-4</span>
+            <span class="source-name">Expert Networks</span>
+            <span class="source-badge">Annotated</span>
+          </div>
+          <div class="source-row">
+            <span class="source-code">00-5</span>
+            <span class="source-name">Synthetic Augmentation</span>
+            <span class="source-badge">Generated</span>
+          </div>
+        </div>
+      </div>
+      <div class="sources-vis">
+        <canvas id="sourcesCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTELLIGENCE -->
+<div class="rule"></div>
+<section id="intelligence">
+  <div class="wrap intel-section">
+    <div class="intel-intro">
+      <div>
+        <span class="eyebrow">03 / Built for Intelligence</span>
+        <h2 class="headline">Why AI companies<br><em>choose Stratum.</em></h2>
+      </div>
+      <p class="body-text" style="margin-bottom:0; align-self:end;">We do not trade in bulk scraped noise. Every dataset in the Stratum network is structured, labeled, and verified before it reaches your pipeline.</p>
+    </div>
+    <div class="intel-grid">
+      <div class="intel-card">
+        <div class="card-tag">Compliance</div>
+        <h3 class="card-title">Consent-first at every layer</h3>
+        <p class="card-body">Every data point in the Stratum network carries a full lineage chain. From collection agreement to delivery receipt, compliance is not an afterthought. It is the architecture.</p>
+      </div>
+      <div class="intel-card">
+        <div class="card-tag">Scale</div>
+        <h3 class="card-title">Petabyte-range, continuously refreshed</h3>
+        <p class="card-body">Static datasets decay. Our live exchange model means your training data evolves alongside the world, with daily refreshes across all active source categories.</p>
+      </div>
+      <div class="intel-card">
+        <div class="card-tag">Precision</div>
+        <h3 class="card-title">Vertical depth, not just breadth</h3>
+        <p class="card-body">Domain specialists review and annotate at the point of collection. The result is data that models can actually learn from, not signals buried in noise.</p>
+      </div>
+      <div class="intel-card">
+        <div class="card-tag">Integration</div>
+        <h3 class="card-title">Native to your stack</h3>
+        <p class="card-body">REST and streaming APIs, direct S3 and GCS delivery, Hugging Face-compatible datasets. Stratum connects to your infrastructure the day you onboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="wrap">
+  <div class="stats-band">
+    <div class="stat-cell">
+      <div class="stat-val">4.2<sup>PB</sup></div>
+      <div class="stat-label">Data under management</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">180<sup>+</sup></div>
+      <div class="stat-label">Source partners</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">34<sup>+</sup></div>
+      <div class="stat-label">AI companies served</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">99<sup>%</sup></div>
+      <div class="stat-label">Compliance rate</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="rule"></div>
+<section id="cta" class="cta-section">
+  <div class="wrap">
+    <div class="cta-inner">
+      <span class="eyebrow" style="text-align:center; display:block;">04 / Access</span>
+      <h2 class="headline">Begin the<br><em>exchange.</em></h2>
+      <p class="body-text">Stratum operates as a closed network. Access requires a partnership review. Reach out to begin the conversation.</p>
+      <div class="cta-actions">
+        <a href="mailto:access@stratum.ai" class="btn-fill">Request Partnership</a>
+        <a href="#exchange" class="btn-outline">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="rule"></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">STRATUM</div>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Security</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="footer-copy">2026 Stratum Data Inc.</div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+/* ── GOLD RGBA HELPER ── */
+const G = a => `rgba(191,169,106,${a})`;
+
+/* ── HERO CANVAS ── */
+const hc = document.getElementById('heroCanvas');
+const hx = hc.getContext('2d');
+let hW, hH, hT = 0;
+
+function resizeHero() {
+  hW = hc.width  = hc.offsetWidth;
+  hH = hc.height = hc.offsetHeight;
+}
+resizeHero();
+window.addEventListener('resize', resizeHero, { passive: true });
+
+const rings = [
+  { r: 52,  sp:  0.0038, n: 8  },
+  { r: 96,  sp: -0.0027, n: 12 },
+  { r: 145, sp:  0.0019, n: 16 },
+  { r: 198, sp: -0.0013, n: 22 },
+  { r: 258, sp:  0.0009, n: 28 },
+  { r: 322, sp: -0.0006, n: 36 },
+];
+
+const flowY = [0.25, 0.37, 0.50, 0.63, 0.75];
+const parts = [];
+flowY.forEach((_, i) => {
+  for (let k = 0; k < 4; k++) {
+    parts.push({ i, p: k / 4, sp: 0.003 + Math.random() * 0.0024 });
+  }
+});
+
+function drawHero() {
+  hx.clearRect(0, 0, hW, hH);
+
+  const cx = hW * 0.62;
+  const cy = hH * 0.50;
+  const sc = Math.min(hW, hH) / 680;
+
+  /* grid */
+  hx.strokeStyle = G(0.03);
+  hx.lineWidth = 0.5;
+  const gs = 54;
+  for (let x = 0; x < hW; x += gs) { hx.beginPath(); hx.moveTo(x,0); hx.lineTo(x,hH); hx.stroke(); }
+  for (let y = 0; y < hH; y += gs) { hx.beginPath(); hx.moveTo(0,y); hx.lineTo(hW,y); hx.stroke(); }
+
+  /* outer measurement arc ticks */
+  const outerR = rings[5].r * sc + 28 * sc;
+  for (let a = 0; a < 360; a += 6) {
+    const rad = (a * Math.PI) / 180;
+    const inner = outerR - (a % 30 === 0 ? 9*sc : a % 10 === 0 ? 5*sc : 2.5*sc);
+    hx.beginPath();
+    hx.moveTo(cx + Math.cos(rad) * outerR, cy + Math.sin(rad) * outerR);
+    hx.lineTo(cx + Math.cos(rad) * inner,  cy + Math.sin(rad) * inner);
+    hx.strokeStyle = G(a % 30 === 0 ? 0.22 : 0.08);
+    hx.lineWidth = 0.5;
+    hx.stroke();
+  }
+
+  /* rings + diamond markers */
+  rings.forEach((ring, i) => {
+    const r = ring.r * sc;
+    hx.beginPath();
+    hx.arc(cx, cy, r, 0, Math.PI * 2);
+    hx.strokeStyle = G(0.07 + i * 0.022);
+    hx.lineWidth = 0.5;
+    hx.stroke();
+
+    const off = hT * ring.sp;
+    for (let d = 0; d < ring.n; d++) {
+      const ang = (d / ring.n) * Math.PI * 2 + off;
+      const dx = cx + Math.cos(ang) * r;
+      const dy = cy + Math.sin(ang) * r;
+      const ds = 2.6 * sc;
+      hx.save();
+      hx.translate(dx, dy);
+      hx.rotate(Math.PI / 4);
+      hx.strokeStyle = G(0.20 + i * 0.038);
+      hx.lineWidth = 0.5;
+      hx.strokeRect(-ds/2, -ds/2, ds, ds);
+      hx.restore();
+    }
+  });
+
+  /* center glow */
+  const cg = hx.createRadialGradient(cx,cy,0, cx,cy, 88*sc);
+  cg.addColorStop(0,   G(0.13));
+  cg.addColorStop(0.5, G(0.04));
+  cg.addColorStop(1,   G(0));
+  hx.fillStyle = cg;
+  hx.beginPath();
+  hx.arc(cx, cy, 88*sc, 0, Math.PI*2);
+  hx.fill();
+
+  /* center rings + dot */
+  hx.beginPath(); hx.arc(cx,cy,16*sc,0,Math.PI*2); hx.strokeStyle=G(0.42); hx.lineWidth=0.8; hx.stroke();
+  hx.beginPath(); hx.arc(cx,cy,3.5*sc,0,Math.PI*2); hx.fillStyle=G(0.75); hx.fill();
+
+  /* MEASURED OUTCOME label area on right */
+  const rightEdge = cx + rings[4].r*sc + 60*sc;
+  if (rightEdge < hW - 20) {
+    hx.save();
+    hx.font = `${8.5*sc}px 'Space Mono', monospace`;
+    hx.fillStyle = G(0.22);
+    hx.textAlign = 'left';
+    hx.fillText('MEASURED OUTCOME', cx + rings[5].r*sc + 20*sc, cy - 28*sc);
+    hx.beginPath();
+    hx.moveTo(cx + rings[5].r*sc + 16*sc, cy);
+    hx.lineTo(rightEdge + 40*sc, cy);
+    hx.strokeStyle = G(0.18);
+    hx.lineWidth = 0.5;
+    hx.stroke();
+    const bd = 7*sc;
+    hx.beginPath();
+    hx.rect(cx + rings[5].r*sc+18*sc, cy - 50*sc, 80*sc, 100*sc);
+    hx.strokeStyle = G(0.12);
+    hx.lineWidth = 0.5;
+    hx.stroke();
+    hx.fillStyle = G(0.04);
+    hx.fillRect(cx + rings[5].r*sc+18*sc, cy - 50*sc, 80*sc, 100*sc);
+    hx.fillStyle = G(0.5);
+    hx.fillText('POST-TRAINING', cx + rings[5].r*sc + 22*sc, cy - 38*sc);
+    hx.fillStyle = G(0.18);
+    hx.fillText('BASELINE', cx + rings[5].r*sc + 22*sc, cy + 38*sc);
+    hx.fillStyle = G(0.12);
+    hx.fillText('HELD-OUT TASKS', cx + rings[5].r*sc + 22*sc, cy + 48*sc);
+    hx.restore();
+  }
+
+  /* flow lines + particles */
+  const lineEnd = cx - rings[0].r*sc - 6;
+  flowY.forEach((yf, i) => {
+    const sy = hH * yf;
+    const cp1x = lineEnd * 0.42;
+    const cp2x = lineEnd * 0.76;
+    hx.beginPath();
+    hx.moveTo(0, sy);
+    hx.bezierCurveTo(cp1x, sy, cp2x, cy, lineEnd, cy);
+    hx.strokeStyle = G(0.09);
+    hx.lineWidth = 0.5;
+    hx.stroke();
+    hx.beginPath();
+    hx.arc(2, sy, 2.2, 0, Math.PI*2);
+    hx.fillStyle = G(0.32);
+    hx.fill();
+  });
+
+  parts.forEach(pt => {
+    const yf = flowY[pt.i];
+    const sy = hH * yf;
+    const cp1x = lineEnd * 0.42;
+    const cp2x = lineEnd * 0.76;
+    const t2 = pt.p, mt = 1 - t2;
+    const px = mt*mt*mt*0 + 3*mt*mt*t2*cp1x + 3*mt*t2*t2*cp2x + t2*t2*t2*lineEnd;
+    const py = mt*mt*mt*sy + 3*mt*mt*t2*sy   + 3*mt*t2*t2*cy   + t2*t2*t2*cy;
+    const alpha = 0.35 + pt.p * 0.55;
+    hx.beginPath();
+    hx.arc(px, py, 1.6, 0, Math.PI*2);
+    hx.fillStyle = G(alpha);
+    hx.fill();
+    const pg = hx.createRadialGradient(px,py,0, px,py,5);
+    pg.addColorStop(0, G(0.1 * alpha));
+    pg.addColorStop(1, G(0));
+    hx.fillStyle = pg;
+    hx.beginPath(); hx.arc(px,py,5,0,Math.PI*2); hx.fill();
+    pt.p += pt.sp;
+    if (pt.p > 1) pt.p = 0;
+  });
+
+  hT++;
+  requestAnimationFrame(drawHero);
+}
+drawHero();
+
+/* ── SOURCES CANVAS ── */
+const sc2 = document.getElementById('sourcesCanvas');
+const sx = sc2.getContext('2d');
+let sW, sH, sT = 0;
+
+function resizeSrc() {
+  const wrap = sc2.parentElement;
+  sW = sc2.width  = wrap.offsetWidth;
+  sH = sc2.height = wrap.offsetHeight;
+}
+resizeSrc();
+window.addEventListener('resize', resizeSrc, { passive: true });
+
+const srings = [
+  { r: 34, sp:  0.006, n: 6  },
+  { r: 66, sp: -0.004, n: 10 },
+  { r: 100, sp:  0.0026, n: 14 },
+  { r: 138, sp: -0.0018, n: 18 },
+];
+const ospd = [0.0095, -0.0072, 0.0052, -0.0040];
+
+function drawSrc() {
+  sx.clearRect(0, 0, sW, sH);
+  const cx = sW * 0.5, cy = sH * 0.5;
+  const sc = Math.min(sW, sH) / 360;
+
+  srings.forEach((ring, i) => {
+    const r = ring.r * sc;
+    sx.beginPath();
+    sx.arc(cx, cy, r, 0, Math.PI*2);
+    sx.strokeStyle = G(0.1 + i * 0.024);
+    sx.lineWidth = 0.5;
+    sx.stroke();
+    const off = sT * ring.sp;
+    for (let d = 0; d < ring.n; d++) {
+      const ang = (d / ring.n) * Math.PI * 2 + off;
+      const dx = cx + Math.cos(ang)*r;
+      const dy = cy + Math.sin(ang)*r;
+      const ds = 2.8*sc;
+      sx.save();
+      sx.translate(dx, dy);
+      sx.rotate(Math.PI/4);
+      sx.strokeStyle = G(0.18 + i*0.04);
+      sx.lineWidth = 0.5;
+      sx.strokeRect(-ds/2,-ds/2,ds,ds);
+      sx.restore();
+    }
+  });
+
+  /* orbiting glows */
+  srings.forEach((ring, i) => {
+    const r = ring.r * sc;
+    const ang = sT * ospd[i] + i * 1.3;
+    const ox = cx + Math.cos(ang)*r;
+    const oy = cy + Math.sin(ang)*r;
+    const og = sx.createRadialGradient(ox,oy,0, ox,oy,10*sc);
+    og.addColorStop(0, G(0.28));
+    og.addColorStop(1, G(0));
+    sx.fillStyle = og;
+    sx.beginPath(); sx.arc(ox,oy,10*sc,0,Math.PI*2); sx.fill();
+    sx.beginPath(); sx.arc(ox,oy,3*sc,0,Math.PI*2);
+    sx.fillStyle = G(0.88); sx.fill();
+  });
+
+  /* center */
+  const cg = sx.createRadialGradient(cx,cy,0, cx,cy,52*sc);
+  cg.addColorStop(0, G(0.14)); cg.addColorStop(1, G(0));
+  sx.fillStyle = cg;
+  sx.beginPath(); sx.arc(cx,cy,52*sc,0,Math.PI*2); sx.fill();
+  sx.beginPath(); sx.arc(cx,cy,13*sc,0,Math.PI*2);
+  sx.strokeStyle=G(0.38); sx.lineWidth=0.5; sx.stroke();
+  sx.beginPath(); sx.arc(cx,cy,2.8*sc,0,Math.PI*2);
+  sx.fillStyle=G(0.9); sx.fill();
+
+  /* measurement ticks on outer ring */
+  const outerR = srings[3].r * sc + 14*sc;
+  for (let a = 0; a < 360; a += 10) {
+    const rad = (a * Math.PI) / 180;
+    const len = a % 30 === 0 ? 7*sc : 3*sc;
+    sx.beginPath();
+    sx.moveTo(cx + Math.cos(rad)*(outerR), cy + Math.sin(rad)*(outerR));
+    sx.lineTo(cx + Math.cos(rad)*(outerR-len), cy + Math.sin(rad)*(outerR-len));
+    sx.strokeStyle = G(a % 30 === 0 ? 0.2 : 0.08);
+    sx.lineWidth = 0.5;
+    sx.stroke();
+  }
+
+  /* labels */
+  sx.font = `${7.5*sc}px 'Space Mono', monospace`;
+  sx.fillStyle = G(0.24);
+  sx.textAlign = 'center';
+  sx.fillText('APPLIED RESEARCH', cx, cy + srings[3].r*sc + 26*sc);
+  sx.fillStyle = G(0.14);
+  sx.fillText('Evaluation pass 04/04', cx, cy + srings[3].r*sc + 36*sc);
+
+  sT++;
+  requestAnimationFrame(drawSrc);
+}
+drawSrc();
+
+/* ── INTERSECTION OBSERVER (scroll fade-in) ── */
+const toFade = document.querySelectorAll(
+  '.step, .source-row, .intel-card, .stat-cell'
+);
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, idx) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), idx * 75);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+toFade.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
