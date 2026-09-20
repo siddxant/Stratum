@@ -14,16 +14,17 @@
 :root {
   --bg: #F5F2EC;
   --bg2: #EDEAE3;
-  --gold: #8B7340;
-  --gold45: rgba(139,115,64,0.45);
-  --gold22: rgba(139,115,64,0.22);
-  --gold14: rgba(139,115,64,0.14);
-  --gold07: rgba(139,115,64,0.07);
+  --gold: #6B5220;
+  --gold-label: #7A6030;
+  --gold45: rgba(107,82,32,0.45);
+  --gold22: rgba(107,82,32,0.22);
+  --gold14: rgba(107,82,32,0.14);
+  --gold07: rgba(107,82,32,0.07);
   --cream: #18150F;
   --muted: #6B6252;
   --border: rgba(100,80,38,0.16);
   --nav-scrolled: rgba(245,242,236,0.95);
-  --gold-rgb: 139,115,64;
+  --gold-rgb: 107,82,32;
 }
 
 /* ── DARK MODE TOKENS ── */
@@ -31,6 +32,7 @@
   --bg: #080808;
   --bg2: #111111;
   --gold: #BFA96A;
+  --gold-label: #C8B47A;
   --gold45: rgba(191,169,106,0.45);
   --gold22: rgba(191,169,106,0.22);
   --gold14: rgba(191,169,106,0.14);
@@ -335,7 +337,7 @@ body {
   font-family: 'Space Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.32em;
-  color: var(--gold22);
+  color: var(--gold-label);
   margin-block-end: 38px;
   display: flex;
   align-items: center;
@@ -389,7 +391,7 @@ body {
   font-family: 'Space Mono', monospace;
   font-size: 8px;
   letter-spacing: 0.2em;
-  color: var(--gold22);
+  color: var(--gold-label);
   min-width: 42px;
 }
 .source-name {
@@ -441,7 +443,7 @@ body {
   font-family: 'Space Mono', monospace;
   font-size: 8px;
   letter-spacing: 0.3em;
-  color: var(--gold22);
+  color: var(--gold-label);
   text-transform: uppercase;
   margin-block-end: 18px;
 }
@@ -911,7 +913,7 @@ themeToggle.addEventListener('click', () => applyTheme(!isDark()));
 
 /* ── GOLD RGBA HELPER (theme-aware) ── */
 function G(a) {
-  const rgb = isDark() ? '191,169,106' : '139,115,64';
+  const rgb = isDark() ? '191,169,106' : '107,82,32';
   return `rgba(${rgb},${a})`;
 }
 
